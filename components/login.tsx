@@ -1,13 +1,13 @@
 "use client";
 
-import { signInWithGoogle } from '@/lib/firebase';
+import { signInWithGoogle } from "@/lib/firebase";
 
 export function LoginButton() {
   const handleLogin = async () => {
     try {
       await signInWithGoogle();
     } catch (error) {
-      console.error('Error logging in:', error);
+      console.error("Error logging in:", error);
     }
   };
 

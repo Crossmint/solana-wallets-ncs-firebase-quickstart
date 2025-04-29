@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { WalletBalance } from "@/components/balance";
 import { TransferFunds } from "@/components/transfer";
-import { DelegatedSigner } from "@/components/delegated-signer";
+// import { DelegatedSigner } from "@/components/delegated-signer";
 import { LogoutButton } from "@/components/logout";
 import { LoginButton } from "@/components/login";
 import { useFirebaseConnector } from "@/hooks/useFirebase";
@@ -56,7 +56,7 @@ export function HomeContent() {
           className="mb-4"
         />
         <h1 className="text-2xl font-semibold mb-2">
-          Solana Wallets Quickstart (Firebase)
+          Solana Wallets NCS Quickstart (Firebase)
         </h1>
         <p className="text-gray-600 text-sm">
           The easiest way to build onchain
@@ -102,7 +102,7 @@ export function HomeContent() {
           <LogoutButton />
         </div>
         <TransferFunds />
-        <DelegatedSigner />
+        {/* <DelegatedSigner /> */}
       </div>
     </div>
   );

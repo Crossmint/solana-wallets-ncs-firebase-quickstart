@@ -1,6 +1,6 @@
 "use client";
 
-import { signOutUser } from '@/lib/firebase';
+import { signOutUser } from "@/lib/firebase";
 
 export function LogoutButton() {
   const handleLogout = async () => {
@@ -8,7 +8,7 @@ export function LogoutButton() {
       await signOutUser();
       window.location.reload();
     } catch (error) {
-      console.error('Error logging out:', error);
+      console.error("Error logging out:", error);
     }
   };
 

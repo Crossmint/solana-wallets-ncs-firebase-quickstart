@@ -12,7 +12,9 @@ export function WalletBalance() {
     async function fetchBalances() {
       if (!wallet || type !== "solana-smart-wallet") return;
       try {
-        const balances = await wallet.getBalances(["sol", "usdc"]);
+        const balances = await wallet.getBalances({
+          tokens: ["sol", "usdc"],
+        });
         setBalances(balances);
       } catch (error) {
         console.error("Error fetching wallet balances:", error);
