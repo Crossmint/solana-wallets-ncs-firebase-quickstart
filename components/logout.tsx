@@ -1,18 +1,22 @@
 "use client";
 
-import { usePrivy } from "@privy-io/react-auth";
+import { signOutUser } from '@/lib/firebase';
 
 export function LogoutButton() {
-  const { logout } = usePrivy();
+  const handleLogout = async () => {
+    try {
+      await signOutUser();
+      window.location.reload();
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
 
   return (
     <button
+      type="button"
       className="w-full py-2 px-4 rounded-md text-sm font-medium border bg-gray-50 hover:bg-gray-100 transition-colors"
-      onClick={() => {
-        logout().then(() => {
-          window.location.reload();
-        });
-      }}
+      onClick={handleLogout}
     >
       Log out
     </button>
