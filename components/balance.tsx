@@ -2,11 +2,18 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useWallet, type WalletBalance } from "@crossmint/client-sdk-react-ui";
+import {
+  useCrossmint,
+  useWallet,
+  type WalletBalance,
+} from "@crossmint/client-sdk-react-ui";
+import { fund1USDC } from "@/lib/fund1USDC";
 
 export function WalletBalance() {
+  const { crossmint } = useCrossmint();
   const { wallet, type } = useWallet();
   const [balances, setBalances] = useState<WalletBalance>([]);
+  const [isFundingUSDC, setIsFundingUSDC] = useState(false);
 
   useEffect(() => {
     async function fetchBalances() {
@@ -32,6 +39,16 @@ export function WalletBalance() {
     balances?.find((t) => t.token === "sol")?.balances.total || "0";
   const usdcBalance =
     balances?.find((t) => t.token === "usdc")?.balances.total || "0";
+
+  const handleOnFundUSDC = async () => {
+    setIsFundingUSDC(true);
+    await fund1USDC({
+      apiKey: crossmint.apiKey!,
+      jwt: crossmint.jwt!,
+      walletAddress: wallet?.address!,
+    });
+    setIsFundingUSDC(false);
+  };
 
   return (
     <div className="flex flex-col gap-2">
@@ -63,14 +80,13 @@ export function WalletBalance() {
         >
           + Get free test SOL
         </a>
-        <a
-          href="https://faucet.circle.com"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={handleOnFundUSDC}
+          disabled={isFundingUSDC}
           className="flex items-center justify-center gap-1.5 text-sm py-1.5 px-3 rounded-md bg-accent/10 text-accent hover:bg-accent/20 transition-colors"
         >
-          + Get free test USDC
-        </a>
+          {isFundingUSDC ? "Funding..." : "+ Get 1 free USDC"}
+        </button>
       </div>
       <div className="text-gray-500 text-xs">
         Refresh the page after topping up. Balance may take a few seconds to
