@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@crossmint/client-sdk-react-ui": "^1.19.8",
+    "@crossmint/client-sdk-react-ui": "^1.19.14",
     "@firebase/auth": "^1.10.1",
     "@solana/spl-token": "^0.4.13",
     "@solana/web3.js": "^1.98.0",
