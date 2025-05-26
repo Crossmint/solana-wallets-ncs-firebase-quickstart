@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@crossmint/client-sdk-react-ui':
-        specifier: ^1.19.16
-        version: 1.19.18(@babel/core@7.26.10)(@babel/preset-env@7.26.9(@babel/core@7.26.10))(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-dom@19.0.0(react@19.0.0))(react-native@0.74.0(@babel/core@7.26.10)(@babel/preset-env@7.26.9(@babel/core@7.26.10))(@types/react@19.0.12)(bufferutil@4.0.9)(encoding@0.1.13)(react@19.0.0)(utf-8-validate@5.0.10))(react@19.0.0)(typescript@5.8.2)(utf-8-validate@5.0.10)
+        specifier: ^1.19.19
+        version: 1.19.19(@babel/core@7.26.10)(@babel/preset-env@7.26.9(@babel/core@7.26.10))(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-dom@19.0.0(react@19.0.0))(react-native@0.74.0(@babel/core@7.26.10)(@babel/preset-env@7.26.9(@babel/core@7.26.10))(@types/react@19.0.12)(bufferutil@4.0.9)(encoding@0.1.13)(react@19.0.0)(utf-8-validate@5.0.10))(react@19.0.0)(typescript@5.8.2)(utf-8-validate@5.0.10)
       '@firebase/auth':
         specifier: ^1.10.1
         version: 1.10.1(@firebase/app@0.11.5)
@@ -783,8 +783,8 @@ packages:
     peerDependencies:
       react: '>=17.0.2'
 
-  '@crossmint/client-sdk-react-ui@1.19.18':
-    resolution: {integrity: sha512-fXGPLHSih4yKjYYDSShOAgmW6ynhwUgzKe8lAWuyX4BAemNVYNwW/0GEj4Y26AipdXDgRNEnm6q8iv1awdxzMg==}
+  '@crossmint/client-sdk-react-ui@1.19.19':
+    resolution: {integrity: sha512-yrRRvhExPcraAgEJII+NluHy6pNf1u+QtNeLVMDN6Yt7F7+9rHW/liA1GOS4I/5ICaT8DnXne/fJ7BMPEXePPA==}
     peerDependencies:
       react: '>=17.0.2'
       react-dom: '>=17.0.2'
@@ -792,8 +792,8 @@ packages:
   '@crossmint/client-sdk-window@1.0.0':
     resolution: {integrity: sha512-plzEzSYsJtQUpfyAVElWcUncp74/p1HI8aujH5f2FFdSbc85e3Q17TnQWRn9Gtj9KNpCuIsh36HCTMv8x5504g==}
 
-  '@crossmint/client-signers@0.0.14':
-    resolution: {integrity: sha512-vkn2HlGglmfOiydKldHfI9C9toeGwfWeLyja1QrNJctxoSOGJSlc9TZHpE8wRy79vC1ByLx76TUlSlluVizOmQ==}
+  '@crossmint/client-signers@0.0.15':
+    resolution: {integrity: sha512-ctE3/Jiq9df7FF35qzBS6bih6AxM5IHEGirzDbyLlwpmZvWrU7HM95OrsHwpl/FfzLsRAwLgFs4ZelF5xoAZ+Q==}
 
   '@crossmint/common-sdk-auth@1.0.32':
     resolution: {integrity: sha512-gWW6b60AOUxjzSWrS2aMK/g/AxTgkfL4WPCzuJleKu8vVB42dYamXm68GXKuNCztF02jFmWk2DdtqayUeT8y0A==}
@@ -6396,13 +6396,13 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@crossmint/client-sdk-react-ui@1.19.18(@babel/core@7.26.10)(@babel/preset-env@7.26.9(@babel/core@7.26.10))(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-dom@19.0.0(react@19.0.0))(react-native@0.74.0(@babel/core@7.26.10)(@babel/preset-env@7.26.9(@babel/core@7.26.10))(@types/react@19.0.12)(bufferutil@4.0.9)(encoding@0.1.13)(react@19.0.0)(utf-8-validate@5.0.10))(react@19.0.0)(typescript@5.8.2)(utf-8-validate@5.0.10)':
+  '@crossmint/client-sdk-react-ui@1.19.19(@babel/core@7.26.10)(@babel/preset-env@7.26.9(@babel/core@7.26.10))(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-dom@19.0.0(react@19.0.0))(react-native@0.74.0(@babel/core@7.26.10)(@babel/preset-env@7.26.9(@babel/core@7.26.10))(@types/react@19.0.12)(bufferutil@4.0.9)(encoding@0.1.13)(react@19.0.0)(utf-8-validate@5.0.10))(react@19.0.0)(typescript@5.8.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@crossmint/client-sdk-auth': 1.2.9(@types/react@19.0.12)(bufferutil@4.0.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(utf-8-validate@5.0.10)(viem@2.23.6(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)(zod@3.22.4))
       '@crossmint/client-sdk-base': 1.5.1
       '@crossmint/client-sdk-react-base': 0.2.16(bufferutil@4.0.9)(encoding@0.1.13)(react@19.0.0)(typescript@5.8.2)(utf-8-validate@5.0.10)(zod@3.22.4)
       '@crossmint/client-sdk-window': 1.0.0
-      '@crossmint/client-signers': 0.0.14
+      '@crossmint/client-signers': 0.0.15
       '@crossmint/common-sdk-auth': 1.0.32
       '@crossmint/common-sdk-base': 0.5.1
       '@crossmint/wallets-sdk': 0.8.1(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.8.2)(utf-8-validate@5.0.10)(zod@3.22.4)
@@ -6471,7 +6471,7 @@ snapshots:
     dependencies:
       zod: 3.22.4
 
-  '@crossmint/client-signers@0.0.14':
+  '@crossmint/client-signers@0.0.15':
     dependencies:
       zod: 3.22.4
 
