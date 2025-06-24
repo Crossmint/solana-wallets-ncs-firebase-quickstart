@@ -1,12 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useWallet } from "@crossmint/client-sdk-react-ui";
+import { Transaction, useWallet } from "@crossmint/client-sdk-react-ui";
 import { PublicKey } from "@solana/web3.js";
-import {
-  createSolTransferTransaction,
-  createTokenTransferTransaction,
-} from "@/lib/createTransaction";
 
 const isSolanaAddressValid = (address: string) => {
   try {
@@ -18,18 +14,17 @@ const isSolanaAddressValid = (address: string) => {
 };
 
 export function TransferFunds() {
-  const { wallet, type } = useWallet();
+  const { wallet } = useWallet();
   const [token, setToken] = useState<"sol" | "usdc" | null>("sol");
   const [recipient, setRecipient] = useState<string | null>(null);
-  const [amount, setAmount] = useState<number | null>(null);
+  const [amount, setAmount] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [txnHash, setTxnHash] = useState<string | null>(null);
+  const [tx, setTx] = useState<Transaction | null>(null);
 
   async function handleOnTransfer() {
     if (
       wallet == null ||
       token == null ||
-      type !== "solana-smart-wallet" ||
       recipient == null ||
       amount == null
     ) {
@@ -45,23 +40,8 @@ export function TransferFunds() {
 
     try {
       setIsLoading(true);
-      function buildTransaction() {
-        return token === "sol"
-          ? createSolTransferTransaction(wallet?.address!, recipient!, amount!)
-          : createTokenTransferTransaction(
-              wallet?.address!,
-              recipient!,
-              process.env.NEXT_PUBLIC_USDC_TOKEN_MINT ||
-                "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU", // USDC token mint
-              amount!
-            );
-      }
-
-      const txn = await buildTransaction();
-      const txnHash = await wallet.sendTransaction({
-        transaction: txn,
-      });
-      setTxnHash(`https://solscan.io/tx/${txnHash}?cluster=devnet`);
+      const tx = await wallet.send(recipient, token, amount);
+      setTx(tx);
     } catch (err) {
       console.error("Transfer: ", err);
       alert("Transfer: " + err);
@@ -109,7 +89,7 @@ export function TransferFunds() {
               type="number"
               className="w-full px-3 py-2 border rounded-md text-sm"
               placeholder="0.00"
-              onChange={(e) => setAmount(Number(e.target.value))}
+              onChange={(e) => setAmount(e.target.value)}
             />
           </div>
         </div>
@@ -135,9 +115,9 @@ export function TransferFunds() {
         >
           {isLoading ? "Transferring..." : "Transfer"}
         </button>
-        {txnHash && !isLoading && (
+        {tx?.explorerLink != null && !isLoading && (
           <a
-            href={txnHash}
+            href={tx.explorerLink}
             className="text-sm text-gray-500 text-center"
             target="_blank"
             rel="noopener noreferrer"

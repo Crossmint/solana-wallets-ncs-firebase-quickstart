@@ -14,10 +14,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <CrossmintProvider apiKey={crossmintApiKey}>
       <CrossmintWalletProvider
-        experimental_enableRecoveryKeys
-        experimental_signersURL={
-          process.env.NEXT_PUBLIC_SIGNERS_URL ?? "https://signers.crossmint.com"
-        }
+        createOnLogin={{ chain: "solana", signer: { type: "email" } }}
       >
         {children}
       </CrossmintWalletProvider>
