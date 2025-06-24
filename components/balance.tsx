@@ -5,23 +5,23 @@ import Image from "next/image";
 import {
   useCrossmint,
   useWallet,
-  type WalletBalance,
+  type Balances,
 } from "@crossmint/client-sdk-react-ui";
 import { fund1USDC } from "@/lib/fund1USDC";
 
 export function WalletBalance() {
   const { crossmint } = useCrossmint();
-  const { wallet, type } = useWallet();
-  const [balances, setBalances] = useState<WalletBalance>([]);
+  const { wallet } = useWallet();
+  const [balances, setBalances] = useState<Balances | undefined>();
   const [isFundingUSDC, setIsFundingUSDC] = useState(false);
 
   useEffect(() => {
     async function fetchBalances() {
-      if (!wallet || type !== "solana-smart-wallet") return;
+      if (!wallet) {
+        return;
+      }
       try {
-        const balances = await wallet.getBalances({
-          tokens: ["sol", "usdc"],
-        });
+        const balances = await wallet.balances();
         setBalances(balances);
       } catch (error) {
         console.error("Error fetching wallet balances:", error);
@@ -29,16 +29,7 @@ export function WalletBalance() {
       }
     }
     fetchBalances();
-  }, [wallet, type]);
-
-  const formatBalance = (balance: string, decimals: number) => {
-    return (Number(balance) / Math.pow(10, decimals)).toFixed(2);
-  };
-
-  const solBalance =
-    balances?.find((t) => t.token === "sol")?.balances.total || "0";
-  const usdcBalance =
-    balances?.find((t) => t.token === "usdc")?.balances.total || "0";
+  }, [wallet]);
 
   const handleOnFundUSDC = async () => {
     setIsFundingUSDC(true);
@@ -50,6 +41,10 @@ export function WalletBalance() {
     setIsFundingUSDC(false);
   };
 
+  const formatBalance = (amount: string) => {
+    return parseFloat(amount).toFixed(2);
+  };
+
   return (
     <div className="flex flex-col gap-2">
       <div className="flex justify-between items-center">
@@ -58,7 +53,7 @@ export function WalletBalance() {
           <p className="font-medium">Solana</p>
         </div>
         <div className="text-gray-700 font-medium">
-          {formatBalance(solBalance, 9)} SOL
+          {formatBalance(balances?.nativeToken.amount ?? "0")} SOL
         </div>
       </div>
       <div className="border-t my-1"></div>
@@ -68,7 +63,7 @@ export function WalletBalance() {
           <p className="font-medium">USDC</p>
         </div>
         <div className="text-gray-700 font-medium">
-          $ {formatBalance(usdcBalance, 6)}
+          ${formatBalance(balances?.usdc.amount ?? "0")} USDC
         </div>
       </div>
       <div className="flex flex-col gap-2 mt-2">

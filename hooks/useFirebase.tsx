@@ -9,73 +9,39 @@ import type { User } from "firebase/auth";
 import { onAuthStateChange } from "@/lib/firebase";
 
 export const useFirebaseConnector = () => {
-  const {
-    experimental_getOrCreateWalletWithRecoveryKey,
-    status: crossmintWalletStatus,
-    error: crossmintWalletError,
-    wallet: crossmintWallet,
-  } = useCrossmintWallet();
+  const { wallet: crossmintWallet, status: crossmintWalletStatus } =
+    useCrossmintWallet();
 
-  const { crossmint } = useCrossmint();
-  const { user, loading: authLoading, isAuthenticated } = useFirebaseAuth();
-
-  console.log({ user, crossmintJwt: crossmint.jwt, isAuthenticated });
-  useEffect(() => {
-    const createCrossmintWallet = async () => {
-      if (!user || !isAuthenticated) {
-        return;
-      }
-      try {
-        await experimental_getOrCreateWalletWithRecoveryKey?.({
-          type: "solana-smart-wallet",
-          email: user.email ?? "",
-        });
-      } catch (error) {
-        console.error("Failed to create Crossmint wallet:", error);
-      }
-    };
-    createCrossmintWallet();
-  }, [user, isAuthenticated]);
-
-  return {
-    user,
-    crossmintWallet,
-    crossmintWalletStatus,
-    crossmintWalletError,
-    isLoading: crossmintWalletStatus === "in-progress" || authLoading,
-  };
-};
-
-const useFirebaseAuth = () => {
-  const { setJwt, crossmint } = useCrossmint();
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { experimental_setCustomAuth } = useCrossmint();
+  const [firebaseUser, setFirebaseUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChange(async (user) => {
-      setUser(user);
-      setLoading(false);
+      setFirebaseUser(user);
+      if (user == null) {
+        setIsLoading(false);
+        return;
+      }
 
-      if (user) {
-        try {
-          const token = await user.getIdToken();
-          console.log({ token });
-          setJwt(token);
-        } catch (error) {
-          console.error("Failed to get Firebase JWT:", error);
-          setJwt(undefined);
-        }
-      } else {
-        setJwt(undefined);
+      try {
+        const token = await user.getIdToken();
+        experimental_setCustomAuth({ jwt: token, email: user.email ?? "" });
+      } catch (error) {
+        console.error("Failed to get Firebase JWT:", error);
+        experimental_setCustomAuth(undefined);
+      } finally {
+        setIsLoading(false);
       }
     });
 
     return () => unsubscribe();
-  }, [setJwt]);
+  }, [firebaseUser]);
 
   return {
-    user,
-    loading,
-    isAuthenticated: crossmint.jwt != null && user != null,
+    user: firebaseUser,
+    crossmintWallet,
+    crossmintWalletStatus,
+    isLoading: crossmintWalletStatus === "in-progress" || isLoading,
   };
 };

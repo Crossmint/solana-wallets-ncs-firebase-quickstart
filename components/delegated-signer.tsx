@@ -9,7 +9,7 @@ import {
 import { cn } from "@/lib/utils";
 
 export function DelegatedSigner() {
-  const { wallet, type } = useWallet();
+  const { wallet } = useWallet();
   const { jwt } = useAuth();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -20,8 +20,8 @@ export function DelegatedSigner() {
 
   useEffect(() => {
     const fetchDelegatedSigners = async () => {
-      if (wallet != null && type === "solana-smart-wallet") {
-        const signers = await wallet.getDelegatedSigners();
+      if (wallet != null) {
+        const signers = await wallet.delegatedSigners();
         setDelegatedSigners(signers);
       }
     };
@@ -29,7 +29,7 @@ export function DelegatedSigner() {
   }, [wallet, jwt]);
 
   const addNewSigner = async () => {
-    if (wallet == null || type !== "solana-smart-wallet") {
+    if (wallet == null) {
       throw new Error("No wallet connected");
     }
     if (!newSigner) {
@@ -38,8 +38,8 @@ export function DelegatedSigner() {
     }
     try {
       setIsLoading(true);
-      await wallet.addDelegatedSigner(`solana-keypair:${newSigner}`);
-      const signers = await wallet.getDelegatedSigners();
+      await wallet.addDelegatedSigner({ signer: newSigner });
+      const signers = await wallet.delegatedSigners();
       setDelegatedSigners(signers);
     } catch (err) {
       console.error("Delegated Signer: ", err);
@@ -96,7 +96,7 @@ export function DelegatedSigner() {
                     key={index}
                     className="whitespace-nowrap px-2 py-1 rounded text-xs text-gray-600"
                   >
-                    {signer.locator}
+                    {signer.signer}
                   </li>
                 ))}
               </ul>
